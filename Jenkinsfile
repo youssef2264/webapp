@@ -31,7 +31,16 @@ pipeline {
             steps {
                 sh 'cp target/*.war /opt/tomcat/webapps'
             }
-        }    
+        }
+	 stage ('Source-Composition-Analysis') {
+		steps {
+		     sh 'rm owasp-* || true'
+		     sh 'wget https://raw.githubusercontent.com/devopssecure/webapp/master/owasp-dependency-check.sh'	
+		     sh 'chmod +x owasp-dependency-check.sh'
+		     sh 'bash owasp-dependency-check.sh'
+		     sh 'cat /var/lib/jenkins/OWASP-Dependency-Check/reports/dependency-check-report.xml'
+		}
+	}
 	    
 	 
 	       
