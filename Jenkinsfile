@@ -19,7 +19,7 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-	stage ('Build') {
+	stage ('Deploy') {
             steps {
                 sh 'cp target/*.war /opt/tomcat/webapps'
             }
