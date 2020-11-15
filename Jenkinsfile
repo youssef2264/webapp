@@ -45,6 +45,11 @@ pipeline {
             }
           }
         }
+	
+       stage('Image Hardening') {
+          steps {
+              sh 'dockle mysql'
+          }
 	    
 	 
 	       
