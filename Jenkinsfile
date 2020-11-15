@@ -1,5 +1,7 @@
 pipeline {
-    agent any
+	agent {
+	     defaultContainer 'maven'
+	}
     tools { 
         maven 'mvn' 
     }
