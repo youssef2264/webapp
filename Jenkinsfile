@@ -33,9 +33,6 @@ pipeline {
             }
         }
 	stage('Dependency Checker') {
-		agent {
-                docker { image 'maven' }
-            }
           steps {
               catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh 'mvn org.owasp:dependency-check-maven:check'
