@@ -61,6 +61,11 @@ pipeline {
         }
       }
 	}
+	stage('DAST') {
+          steps {       
+          sh 'docker run -t owasp/zap2docker-stable zap-baseline.py -t https://www.zaproxy.org/ || exit 0'
+          }
+          }    
 	    
 	 
 	       
