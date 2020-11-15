@@ -49,6 +49,7 @@ pipeline {
           steps {
               sh 'dockle mysql'
           }
+	}
 	    
 	 
 	       
