@@ -50,7 +50,7 @@ pipeline {
         stage('Image Scan') {
           steps {
             
-              sh 'trivy image mysql'
+              sh 'trivy image nginx'
               
           }
         }
