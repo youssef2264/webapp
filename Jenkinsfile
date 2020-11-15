@@ -45,11 +45,20 @@ pipeline {
             }
           }
         }
-	stage('Image Hardening') {
+	stage('Artefact Analysis') {
+      parallel {
+        stage('Image Scan') {
+          steps {
+            
+              sh 'trivy image mysql'
+              
+          }
+        }
+        stage('Image Hardening') {
           steps {
               sh 'dockle mysql'
           }
-	}
+        }
 	    
 	 
 	       
