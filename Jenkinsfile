@@ -32,15 +32,20 @@ pipeline {
                 sh 'cp target/*.war /opt/tomcat/webapps'
             }
         }
-	 stage ('Source-Composition-Analysis') {
-		steps {
-		     sh 'rm owasp-* || true'
-		     sh 'wget https://raw.githubusercontent.com/AliElKhatteb/webapp/dev/owasp-dependency-check.sh'	
-		     sh 'chmod +x owasp-dependency-check.sh'
-		     sh 'bash owasp-dependency-check.sh'
-		     sh 'cat odc-reports/dependency-check-report.xml'
-		}
-	}
+	stage('Dependency Checker') {
+          steps {
+            container('maven') {
+              catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
+                sh 'mvn org.owasp:dependency-check-maven:check'
+              }
+            }
+          }
+          post {
+            always {
+              archiveArtifacts allowEmptyArchive: true, artifacts: 'target/dependency-check-report.html', fingerprint: true, onlyIfSuccessful: true
+            }
+          }
+        }
 	    
 	 
 	       
