@@ -1,7 +1,5 @@
 pipeline {
-	agent {
-	     defaultContainer 'maven'
-	}
+	agent any
     tools { 
         maven 'mvn' 
     }
@@ -35,12 +33,14 @@ pipeline {
             }
         }
 	stage('Dependency Checker') {
+		agent {
+                docker { image 'maven' }
+            }
           steps {
-            container('maven') {
               catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                 sh 'mvn org.owasp:dependency-check-maven:check'
               }
-            }
+            
           }
           post {
             always {
