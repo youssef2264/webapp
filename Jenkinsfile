@@ -17,19 +17,10 @@ node {
       }
    }
 
-   stage ('sonarqube analysis'){
-       bat(/"${mvnHome}\bin\mvn" -Dmaven.test.failure.ignore verify sonar:sonar/)
-      }
+  
    stage('Results') {
       junit '**/target/surefire-reports/TEST-*.xml'
       archiveArtifacts 'target/*.jar'
    }
-   stage("Dependency Check") {
-
-      bat(/"${dep_check}\bin\dependency-check" -f XML -s target\*.jar /)
-      dependencyCheckPublisher pattern: 'dependency-check-report.xml'
-
-      archiveArtifacts allowEmptyArchive: true, artifacts: 'dependency-check-report.xml', onlyIfSuccessful: true
-    }
 
 }
