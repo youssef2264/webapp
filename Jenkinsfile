@@ -17,7 +17,9 @@ node {
       }
    }
 
-  
+  stage ('Deploy-To-Tomcat') {
+            bat 'copy target\WebApp.war E:\apache-tomcat-9.0.43\webapps\webapp.war' 
+           }
    stage('Results') {
       archiveArtifacts 'target/*.war'
    }
